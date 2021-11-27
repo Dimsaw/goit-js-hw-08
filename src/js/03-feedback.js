@@ -21,13 +21,8 @@ const formData = { email: input.value, message: textarea.value };
 
 function areaOfInputs(evt) {
   formData[evt.target.name] = evt.target.value;
-  localStorage.setItem(
-    LOCALSTORAGE_KEY,
-    JSON.stringify({
-      email: input.value,
-      message: textarea.value,
-    }),
-  );
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(formData));
+  console.log('JSON.stringify', JSON.stringify(formData));
 }
 
 function populateTextarea() {
