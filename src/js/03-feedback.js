@@ -4,27 +4,31 @@ const form = document.querySelector('form ');
 const textarea = document.querySelector('textarea');
 const input = document.querySelector('input');
 
-const LOCALSTORAGE_KEY = 'feedback-form-state';
-populateTextarea();
-
 form.addEventListener('input', throttle(areaOfInputs, 500));
 form.addEventListener('submit', submitForm);
 
+const LOCALSTORAGE_KEY = 'feedback-form-state';
+
+populateTextarea();
+
 function submitForm(evt) {
   evt.preventDefault();
-
   evt.target.reset();
-  console.log('LOCALSTORAGE_KEY', JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)));
+  console.log(LOCALSTORAGE_KEY, JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)));
   localStorage.removeItem(LOCALSTORAGE_KEY);
+  // console.log(formData);
 }
-const formData = { email: input.value, message: textarea.value };
-
+const formData = {};
 function areaOfInputs(evt) {
   formData[evt.target.name] = evt.target.value;
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(formData));
-  console.log('JSON.stringify', JSON.stringify(formData));
+  localStorage.setItem(
+    LOCALSTORAGE_KEY,
+    JSON.stringify({
+      email: input.value,
+      message: textarea.value,
+    }),
+  );
 }
-
 function populateTextarea() {
   const savedMessage = localStorage.getItem(LOCALSTORAGE_KEY);
   const parsedMessage = JSON.parse(savedMessage);
